@@ -1,0 +1,14 @@
+*.o
+*.s
+*.d
+*.a
+*.so
+*.so.*
+*.dylib
+*.dll
+*.lib
+
+
+build/
+.vscode/
+.idea/
