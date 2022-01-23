@@ -5,8 +5,16 @@ WAR = -Wall
 OPT = -O3 -march=native -fdata-sections -ffunction-sections
 CFLAGS = ${OPT} ${WAR} ${STD}
 LDFLAGS = -Wl,--gc-sections
-
-all: clean build/heron
+LDLIBS= -lm -lrt
+all: clean \
+build/heron_k \
+build/rationals \
+build/timespec \
+build/endianness \
+build/crash \
+build/test_circular \
+build/numberline \
+build/mbstrings-main
 
 clean:
 	rm -rf build
@@ -14,31 +22,74 @@ clean:
 build/VERSION:
 	mkdir -p build && echo "1.0.0" > build/VERSION
 
-build/heron.o: build/VERSION
-	${CC} ${CFLAGS} -c heron.c
-	mv heron.o build
+build/heron_k.o: build/VERSION
+	${CC} ${CFLAGS} -c heron_k.c
+	mv heron_k.o build
 
-build/heron: build/heron.o
+build/heron_k: build/heron_k.o
 	cd build && \
-	${CC} -o heron ${LDFLAGS} heron.o ${LDLIBS} 
+	${CC} -o heron_k ${LDFLAGS} heron_k.o ${LDLIBS} 
 
+build/rationals.o: build/VERSION
+	${CC} ${CFLAGS} -c rationals.c 
+	mv rationals.o build
 
-test: build/heron
-	cd build && ./heron 0.07 5 6E+23
-#1heron: a=7.00000e-02, x=1.42857e+01, a*x=0.999999999996
-#2heron: a=5.00000e+00, x=2.00000e-01, a*x=0.999999999767
-#3heron: a=6.00000e+23, x=1.66667e-24, a*x=0.999999997028
+build/rationals: build/rationals.o
+	cd build && \
+	${CC} -o rationals ${LDFLAGS} rationals.o ${LDLIBS}
 
+build/timespec.o: build/VERSION
+	${CC} ${CFLAGS} -c timespec.c
+	mv timespec.o build
 
-heron_k.c
-rationals.h
-rationals.c
-timespec.c
-endianness.c
-crash.c
-circular.h
-circular.c
-numberline.c
-mbstring-main.c
-mbstrings.h
-mbstrings.c
+build/timespec: build/timespec.o
+	cd build && \
+	${CC} -o timespec ${LDFLAGS} timespec.o ${LDLIBS}
+
+build/endianness.o: build/VERSION
+	${CC} ${CFLAGS} -c endianness.c
+	mv endianness.o build
+
+build/endianness: build/endianness.o
+	cd build && \
+	${CC} -o endianness ${LDFLAGS} endianness.o ${LDLIBS}
+
+build/crash.o: build/VERSION
+	${CC} ${CFLAGS} -c crash.c
+	mv crash.o build
+
+build/crash: build/crash.o
+	cd build && \
+	${CC} -o crash ${LDFLAGS} crash.o ${LDLIBS}
+
+build/circular.o: build/VERSION
+	${CC} ${CFLAGS} -c circular.c
+	mv circular.o build
+
+build/test_circular.o: build/VERSION
+	${CC} ${CFLAGS} -c test_circular.c
+	mv test_circular.o build
+
+build/test_circular: build/test_circular.o build/circular.o
+	cd build && \
+	${CC} -o test_circular ${LDFLAGS} test_circular.o circular.o ${LDLIBS}
+
+build/numberline.o: build/VERSION
+	${CC} ${CFLAGS} -c numberline.c
+	mv numberline.o build
+
+build/numberline: build/numberline.o
+	cd build && \
+	${CC} -o numberline ${LDFLAGS} numberline.o ${LDLIBS}
+
+build/mbstrings.o: build/VERSION
+	${CC} ${CFLAGS} -c mbstrings.c
+	mv mbstrings.o build
+
+build/mbstrings-main.o: build/VERSION 
+	${CC} ${CFLAGS} -c mbstrings-main.c
+	mv mbstrings-main.o build
+
+build/mbstrings-main: build/mbstrings-main.o build/mbstrings.o
+	cd build && \
+	${CC} -o mbstrings-main ${LDFLAGS} mbstrings-main.o mbstrings.o
