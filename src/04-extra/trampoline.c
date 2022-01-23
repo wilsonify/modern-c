@@ -180,7 +180,7 @@ void trp_start(void) {
   /* If there is not yet an alternative signal stack, create it. */
   sigaltstack(0, &prev);
   if (!prev.ss_sp) {
-    enum { trampoline_stksz = 10*SIGSTKSZ, };
+    enum { trampoline_stksz = 10*_SC_SIGSTKSZ, };
     static
       char trampoline_stk[trampoline_stksz] = { 0 };
 
