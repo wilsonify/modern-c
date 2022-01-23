@@ -51,7 +51,7 @@ DEP = -MD
 # One source (terran.c) also needs my macro library P99. If you
 # comment the following lines out, the compilation of that file will
 # not work.  Adapt to the path on your system.
-P99 = ../../orwl/p99-source/p99
+P99 = external/p99/p99
 INC = -I${P99}
 
 CFLAGS = ${OPT} ${WAR} ${STD} ${INC} ${DEP}

@@ -1,0 +1,3 @@
+[submodule "external/p99"]
+	path = external/p99
+	url = https://gitlab.inria.fr/gustedt/p99.git
