@@ -169,7 +169,7 @@ void trp_stop(void) {
   free(trp_size);
 }
 
-__attribute__((constructor(1002)))
+__attribute__((constructor(1002))) // constructor takes an optional integer argument to specify priority.
 static
 void trp_start(void) {
   atexit(trp_stop);
