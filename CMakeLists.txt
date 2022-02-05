@@ -7,6 +7,10 @@ include_directories(external/googletest/googletest/include)
 add_subdirectory(external/googletest)
 link_directories(external/googletest/build/lib)
 
+include_directories(src/00-encounter)
+add_subdirectory(src/00-encounter)
+link_directories(src/00-encounter)
+
 add_subdirectory(tests/test-00-encounter)
 add_subdirectory(tests/test-01-acquaintance)
 add_subdirectory(tests/test-02-cognition)

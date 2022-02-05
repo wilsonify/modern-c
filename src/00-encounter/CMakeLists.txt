@@ -1,0 +1,1 @@
+add_library(getting-started SHARED getting-started.c)
