@@ -1,6 +1,7 @@
 
 #include <gtest/gtest.h>
 
+// Demonstrate some basic assertions.
 TEST(smoke, BasicAssertions)
 {
   // is anything on fire?

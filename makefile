@@ -11,8 +11,8 @@ build/VERSION:
 tests/test-00-encounter/test-getting-started: build/VERSION
 	cd build &&\
 	cmake .. &&\
-	make &&\
+	make
 
 test: tests/test-00-encounter/test-getting-started
-	cd build/tests/test-00-encounter &&\
-	./test-getting-started
+	cd build &&\
+	ctest
