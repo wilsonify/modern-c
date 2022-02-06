@@ -1,6 +1,6 @@
 
 #include <gtest/gtest.h>
-//#include "starter_expo.h"
+#include "starter_expo.h"
 
 TEST(smoke, BasicAssertions)
 {
@@ -12,6 +12,6 @@ TEST(smoke, BasicAssertions)
 TEST(smoke, runTheMain)
 {
   double result;
-  result = 7.0*7.0;
+  result = square(7.0);
   EXPECT_EQ(result, 49.0);
 }

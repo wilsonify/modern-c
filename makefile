@@ -7,6 +7,13 @@ clean:
 external/googletest/CMakeLists.txt:
 	git submodule update --init
 
+build/lib/libgtest.a: external/googletest/CMakeLists.txt
+	cd external/googletest &&\
+	mkdir -p build &&\
+	cd build &&\
+	cmake -G Ninja .. &&\
+	ninja
+
 build/VERSION:
 	mkdir -p build &&\
 	echo "1.0.0" > build/VERSION
