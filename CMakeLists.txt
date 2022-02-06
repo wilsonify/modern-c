@@ -3,10 +3,12 @@ project(modern-c-examples LANGUAGES Fortran C CXX)
 set(CMAKE_CXX_STANDARD 11) # GoogleTest requires at least C++11
 set(CMAKE_Fortran_Compiler gfortran)
 
-#build the test library
+#build the test runner
 include_directories(external/googletest/googletest/include)
 add_subdirectory(external/googletest)
 link_directories(external/googletest/build/lib)
+
+############################ 00-encounter ####################################
 
 # build a shared library
 include_directories(src/00-encounter/starter)
@@ -21,21 +23,37 @@ target_link_libraries(getting-started starter)
 add_executable(test-getting-started tests/test-00-encounter/test-getting-started.cpp)
 target_link_libraries(test-getting-started gtest gtest_main starter)
 
+############################ 01-Acquaintance ####################################
+
+# build a shared library
+include_directories(src/01-Acquaintance/acquaintance)
+add_library(acquaintance SHARED src/01-Acquaintance/acquaintance/acquaintance.c)
+link_directories(${CMAKE_CURRENT_BINARY_DIR})
+
 # build a test
 add_executable(test-euclid tests/test-01-acquaintance/test-euclid.cpp)
-target_link_libraries(test-euclid gtest gtest_main)
+target_link_libraries(test-euclid gtest gtest_main acquaintance)
+
+############################ 02-cognition ####################################
 
 # build a test
 add_executable(test-circular tests/test-02-cognition/test-circular.cpp)
 target_link_libraries(test-circular gtest gtest_main)
 
+
+############################ 03-experience ####################################
+
 # build a test
 add_executable(test-B9 tests/test-03-experience/test-B9.cpp)
 target_link_libraries(test-B9 gtest gtest_main)
 
+############################ 04-extra ####################################
+
 # build a test
 add_executable(test-anonymous tests/test-04-extra/test-anonymous.cpp)
 target_link_libraries(test-anonymous gtest gtest_main)
+
+############################ run the tests ####################################
 
 enable_testing()
 add_test(run-getting-started getting-started)
