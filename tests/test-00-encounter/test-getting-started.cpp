@@ -9,9 +9,16 @@ TEST(smoke, BasicAssertions)
   EXPECT_EQ(7 * 6, 42);
 }
 
-TEST(smoke, runTheMain)
+TEST(smoke, square)
 {
   double result;
   result = square(7.0);
   EXPECT_EQ(result, 49.0);
+}
+
+TEST(smoke, runTheMain)
+{
+  double result;
+  result = mainly();
+  EXPECT_EQ(result, 0);
 }
