@@ -3,24 +3,44 @@ project(modern-c-examples LANGUAGES Fortran C CXX)
 set(CMAKE_CXX_STANDARD 11) # GoogleTest requires at least C++11
 set(CMAKE_Fortran_Compiler gfortran)
 
+#build the test library
 include_directories(external/googletest/googletest/include)
 add_subdirectory(external/googletest)
 link_directories(external/googletest/build/lib)
 
-include_directories(src/00-encounter)
-add_subdirectory(src/00-encounter)
-link_directories(src/00-encounter)
+# build a shared library
+include_directories(src/00-encounter/starter)
+add_library(starter SHARED src/00-encounter/starter/starter.c)
+link_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-add_subdirectory(tests/test-00-encounter)
-add_subdirectory(tests/test-01-acquaintance)
-add_subdirectory(tests/test-02-cognition)
-add_subdirectory(tests/test-03-experience)
-add_subdirectory(tests/test-04-extra)
+# build an executable
+add_executable(getting-started src/00-encounter/getting-started.c)
+target_link_libraries(getting-started starter)
+
+# build a test
+add_executable(test-getting-started tests/test-00-encounter/test-getting-started.cpp)
+target_link_libraries(test-getting-started gtest gtest_main starter)
+
+# build a test
+add_executable(test-euclid tests/test-01-acquaintance/test-euclid.cpp)
+target_link_libraries(test-euclid gtest gtest_main)
+
+# build a test
+add_executable(test-circular tests/test-02-cognition/test-circular.cpp)
+target_link_libraries(test-circular gtest gtest_main)
+
+# build a test
+add_executable(test-B9 tests/test-03-experience/test-B9.cpp)
+target_link_libraries(test-B9 gtest gtest_main)
+
+# build a test
+add_executable(test-anonymous tests/test-04-extra/test-anonymous.cpp)
+target_link_libraries(test-anonymous gtest gtest_main)
 
 enable_testing()
-
-add_test(run-test-getting-started tests/test-00-encounter/test-getting-started)
-add_test(run-test-euclid tests/test-01-acquaintance/test-euclid)
-add_test(run-test-circular tests/test-02-cognition/test-circular)
-add_test(run-test-B9 tests/test-03-experience/test-B9)
-add_test(run-test-anonymous tests/test-04-extra/test-anonymous)
+add_test(run-getting-started getting-started)
+add_test(run-test-getting-started test-getting-started)
+add_test(run-test-euclid test-euclid)
+add_test(run-test-circular test-circular)
+add_test(run-test-B9 test-B9)
+add_test(run-test-anonymous test-anonymous)
