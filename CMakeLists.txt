@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 project(modern-c-examples LANGUAGES Fortran C CXX)
-set(CMAKE_CXX_STANDARD 11) # GoogleTest requires at least C++11
+set(CMAKE_CXX_STANDARD 17) # GoogleTest requires at least C++11
 set(CMAKE_Fortran_Compiler gfortran)
 
 #build the test runner
@@ -46,12 +46,22 @@ link_directories(${CMAKE_CURRENT_BINARY_DIR})
 add_executable(test-circular tests/test-02-cognition/test-circular.cpp)
 target_link_libraries(test-circular gtest gtest_main cognition)
 
-
 ############################ 03-experience ####################################
+
+# build a shared library
+include_directories(src/03-experience/experience)
+FILE(GLOB SOURCES src/03-experience/experience/*.c)
+add_library(experience SHARED ${SOURCES})
+link_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 # build a test
 add_executable(test-B9 tests/test-03-experience/test-B9.cpp)
-target_link_libraries(test-B9 gtest gtest_main)
+target_link_libraries(test-B9 gtest gtest_main experience)
+
+# build a test
+add_executable(test-sighandler tests/test-03-experience/test-sighandler.cpp)
+target_link_libraries(test-sighandler gtest gtest_main experience)
+
 
 ############################ 04-extra ####################################
 
