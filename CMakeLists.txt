@@ -36,9 +36,15 @@ target_link_libraries(test-euclid gtest gtest_main acquaintance)
 
 ############################ 02-cognition ####################################
 
+# build a shared library
+include_directories(src/02-cognition/cognition)
+FILE(GLOB SOURCES src/02-cognition/cognition/*.c)
+add_library(cognition SHARED ${SOURCES})
+link_directories(${CMAKE_CURRENT_BINARY_DIR})
+
 # build a test
 add_executable(test-circular tests/test-02-cognition/test-circular.cpp)
-target_link_libraries(test-circular gtest gtest_main)
+target_link_libraries(test-circular gtest gtest_main cognition)
 
 
 ############################ 03-experience ####################################
