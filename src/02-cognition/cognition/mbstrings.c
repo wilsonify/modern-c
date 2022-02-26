@@ -121,7 +121,7 @@ char const* mbsrwcjump(char const s1[static 1], mbstate_t*restrict state,
 char const* mbsrwcs(char const s1[static 1], mbstate_t*restrict state,
                     wchar_t const S2[static 1]) {
   if (!state) state = MBSTATE;
-  size_t S2len = wcslen(S2);
+  size_t S2len = wcslen_s(S2);
   switch (S2len) {
   case 0: return 0;
   case 1: return mbsrwc(s1, state, S2[0], 0);
