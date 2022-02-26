@@ -148,9 +148,14 @@ char const* mbsrwcs(char const s1[static 1], mbstate_t*restrict state,
 
 char const* mbsrmbs(char const s1[static 1], mbstate_t*restrict state,
                     char const s2[static 1]) {
-  if (!state) state = MBSTATE;
+  if (!state) { 
+    state = MBSTATE; 
+    }
   wchar_t*restrict S2 = mbsrdup(s2, 0);
-  if (!S2 || !S2[0]) return 0;
+  if (!S2 || !S2[0]) { 
+    free(S2);
+    return 0; 
+    }
   s1 = mbsrwcs(s1, state, S2);
   free(S2);
   return s1;
