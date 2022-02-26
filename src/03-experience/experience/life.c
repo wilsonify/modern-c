@@ -102,14 +102,15 @@ void life_torus(life* L) {
 #define BROOK ESC_TBLUE "♜" ESC_NORMAL
 
 static
-void border(size_t m, int b) {
+void border(int m, int b) {
   fputs(ESC_TRED, stdout);
   fputs(ESC_BORDER[b & ~esc_right], stdout);
   for (size_t j = 0; j < m; ++j)
     fputs("━", stdout);
   fputs(ESC_BORDER[b & ~esc_left], stdout);
   fputs(ESC_NORMAL, stdout);
-  esc_move(stdout, 1, -(m+2));
+  int val = -(m+2);
+  esc_move(stdout, 1, val);
 }
 
 void life_draw(life* L) {
@@ -120,7 +121,7 @@ void life_draw(life* L) {
   size_t const off0 = L->off0;
   size_t const off1 = L->off1;
   size_t const len0 = L->len0;
-  size_t const len1 = L->len1;
+  int const len1 = L->len1;
 
   fputs(ESC_SAVE ESC_HOME ESC_HIDE, stdout);
   border(len1, esc_top|esc_right|esc_left);
@@ -135,7 +136,8 @@ void life_draw(life* L) {
     fputs(ESC_TRED, stdout);
     fputs(ESC_BORDER[esc_right], stdout);
     fputs(ESC_NORMAL, stdout);
-    esc_move(stdout, 1, -(len1+2));
+    int val = -(len1+2);
+    esc_move(stdout, 1, val);
   }
   border(len1, esc_bottom|esc_right|esc_left);
   esc_goto(stdout, len0+3, 1);
@@ -153,7 +155,7 @@ void life_draw4(life* L) {
   size_t const off0 = L->off0;
   size_t const off1 = L->off1;
   size_t const len0 = L->len0;
-  size_t const len1 = L->len1;
+  int const len1 = L->len1;
 
   fputs(ESC_SAVE ESC_HOME ESC_HIDE, stdout);
   border(len1/2, esc_top|esc_right|esc_left);
@@ -186,7 +188,8 @@ void life_draw4(life* L) {
     fputs(ESC_TRED, stdout);
     fputs(ESC_BORDER[esc_right], stdout);
     fputs(ESC_NORMAL, stdout);
-    esc_move(stdout, 1, -(len1/2+2));
+    int val = -(len1/2+2);
+    esc_move(stdout, 1, val);
   }
   border(len1/2, esc_bottom|esc_right|esc_left);
   esc_goto(stdout, len0/2+3, 1);
