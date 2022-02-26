@@ -1,5 +1,5 @@
 
-all: clean build/VERSION tests/test-00-encounter test
+all: clean test
 
 clean:
 	rm -rf build
@@ -19,9 +19,8 @@ build/VERSION:
 	echo "1.0.0" > build/VERSION
 
 tests/test-00-encounter/test-getting-started: build/VERSION external/googletest/CMakeLists.txt
-	cd build &&\
-	cmake -G Ninja .. &&\
-	ninja
+	cmake -S . -B build -G Ninja &&\
+	ninja -C build
 
 test: tests/test-00-encounter/test-getting-started
 	cd build &&\
