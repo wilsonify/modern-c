@@ -29,3 +29,10 @@ TEST(smoke, read_a_number)
   read_number(input);
 }
 
+TEST(smoke, is_four)
+{
+  double input = 7.0;
+  bool result;
+  result = is4(input);
+  EXPECT_EQ(result, false);
+}
