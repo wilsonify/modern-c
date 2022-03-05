@@ -36,3 +36,10 @@ TEST(smoke, is_four)
   result = is4(input);
   EXPECT_EQ(result, false);
 }
+TEST(smoke, is_five)
+{
+  double input = 5.0;
+  bool result;
+  result = is5(input);
+  EXPECT_EQ(result, true);
+}
