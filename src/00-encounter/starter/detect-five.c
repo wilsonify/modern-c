@@ -38,11 +38,11 @@ bool is5(int x)
         result = false;
         break;
     case 4:
-        printf("It's three!\n");
+        printf("It's four!\n");
         result = false;
         break;
     case 5:
-        printf("It's three!\n");
+        printf("It's five!\n");
         result = true;
         break;
     default:
