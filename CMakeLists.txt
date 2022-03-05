@@ -17,7 +17,8 @@ link_directories(external/googletest/build/lib)
 
 # build a shared library
 include_directories(src/00-encounter/starter)
-add_library(starter SHARED src/00-encounter/starter/starter.c)
+FILE(GLOB starterSources src/00-encounter/starter/*.c)
+add_library(starter SHARED ${starterSources})
 link_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 # build an executable

@@ -22,3 +22,10 @@ TEST(smoke, runTheMain)
   result = mainly();
   EXPECT_EQ(result, 0);
 }
+
+TEST(smoke, read_a_number)
+{
+  double input = 7.0;
+  read_number(input);
+}
+
