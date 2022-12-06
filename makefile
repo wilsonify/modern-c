@@ -5,29 +5,38 @@ all: clean test
 clean:
 	rm -rf build
 
+build/VERSION.txt:
+	mkdir -p build && $(call ver_file, $@)
+
+dist/VERSION.txt:
+	mkdir -p dist && $(call ver_file, $@)
+
 external/googletest/CMakeLists.txt:
 	git submodule update --init
 
-build/lib/libgtest.a: external/googletest/CMakeLists.txt
+build/lib/libgtest.a: build/VERSION.txt external/googletest/CMakeLists.txt 
 	cd external/googletest &&\
 	mkdir -p build &&\
 	cd build &&\
 	cmake -G Ninja .. &&\
 	ninja
 
-build/VERSION:
-	mkdir -p build &&\
-	echo "1.0.0" > build/VERSION
+build/test-getting-started: build/VERSION.txt external/googletest/CMakeLists.txt
+	cmake -S . -B build -G Ninja && ninja -C build
 
-tests/test-00-encounter/test-getting-started: build/VERSION external/googletest/CMakeLists.txt
-	cmake -S . -B build -G Ninja &&\
-	ninja -C build
+dist/test-getting-started: dist/VERSION.txt build/test-getting-started
+	cp build/getting-started dist && \
+	cp build/test-* dist && \
+	cp build/lib*.so dist && \
+	cp build/CTestTestfile.cmake dist
 
-test: tests/test-00-encounter/test-getting-started
-	cd build &&\
-	ctest
+test: dist/test-getting-started
+	cd dist && ctest
 
-build/modern-c-base.txt: build/VERSION
+build/modern-c-examples-Linux.tar.gz: test
+	cd build && cpack -C CPackConfig.cmake
+
+build/modern-c-base.txt: build/VERSION.txt
 	docker build -t modern-c-base -f Dockerfile-base . && $(call ver_file, $@)
 
 build/modern-c-builder.txt: build/modern-c-base.txt

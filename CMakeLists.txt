@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.14)
 project(modern-c-examples LANGUAGES Fortran C CXX)
+
+# The version number.
+set(VERSION_MAJOR 1)
+set(VERSION_MINOR 0)
+
 set(CMAKE_CXX_STANDARD 17) # GoogleTest requires at least C++11
 set(CMAKE_Fortran_Compiler gfortran)
 
@@ -84,3 +89,16 @@ add_test(run-test-euclid test-euclid)
 add_test(run-test-circular test-circular)
 add_test(run-test-B9 test-B9)
 add_test(run-test-anonymous test-anonymous)
+
+# add the install targets
+install (TARGETS test-getting-started DESTINATION bin)
+install (FILES "${PROJECT_BINARY_DIR}/CTestTestfile.cmake" DESTINATION include)
+
+# build a CPack driven installer package
+include (InstallRequiredSystemLibraries)
+set (CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/license.txt")
+set (CPACK_PACKAGE_NAME "modern-c-examples")
+set (CPACK_PACKAGE_VERSION_MAJOR "${VERSION_MAJOR}")
+set (CPACK_PACKAGE_VERSION_MINOR "${VERSION_MINOR}")
+set (CPACK_SOURCE_GENERATOR "TGZ")
+include (CPack)
