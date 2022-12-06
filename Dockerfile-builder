@@ -1,0 +1,4 @@
+FROM modern-c-base:latest
+RUN apt-get install -y apt-utils
+RUN apt-get install -y cmake gfortran gcc g++ ninja-build
+WORKDIR /usr/src/app
